@@ -36,15 +36,14 @@ public class ActivityCatalogo extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Repondo a selleccion
+            // Repondo a seleccionar
             case R.id.insertar_dummy_data:
-                // Do nothing for now
+
                 return true;
             // Respondo a borrar todo
             case R.id.borrar_todo:
-                // Do nothing for now
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
