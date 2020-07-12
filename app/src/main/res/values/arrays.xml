@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- opciones para mostrar en el spinner -->
+    <string-array name="array_opciones_genero">
+        <item>@string/genero_desconocido</item>
+        <item>@string/genero_macho</item>
+        <item>@string/gendero_hembra</item>
+    </string-array>
+</resources>

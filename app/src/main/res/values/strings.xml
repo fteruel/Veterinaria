@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Veterinaria</string>
+
+    <!--  [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insertar Data Dummy</string>
+
+    <!--  [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Borrar mascotas</string>
+
+    <!--  [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_pet">Agregar una mascota</string>
+
+    <!-- r [CHAR LIMIT=20] -->
+    <string name="action_save">Guardar</string>
+
+    <!--  [CHAR LIMIT=20] -->
+    <string name="action_delete">Borrar</string>
+
+    <!--  [CHAR LIMIT=30] -->
+    <string name="category_overview">Overview</string>
+
+    <!--  [CHAR LIMIT=30] -->
+    <string name="category_gender">Genero</string>
+
+    <!--  [CHAR LIMIT=30] -->
+    <string name="category_measurement">Medida</string>
+
+    <!-- [CHAR LIMIT=30] -->
+    <string name="hint_pet_name">Name</string>
+
+    <!--  [CHAR LIMIT=30] -->
+    <string name="hint_pet_breed">Raza</string>
+
+    <!--  [CHAR LIMIT=30] -->
+    <string name="hint_pet_weight">Peso</string>
+
+    <!--  [CHAR LIMIT=5] -->
+    <string name="unit_pet_weight">kg</string>
+
+    <!--  [CHAR LIMIT=20] -->
+    <string name="genero_desconocido">Desconocido</string>
+
+    <!--  [CHAR LIMIT=20] -->
+    <string name="genero_macho">Macho</string>
+
+    <!--  [CHAR LIMIT=20] -->
+    <string name="gendero_hembra">hembra</string>
+</resources>
