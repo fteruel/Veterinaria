@@ -3,6 +3,8 @@ package com.example.veterinaria;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -12,19 +14,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.veterinaria.data.MascotasHelper;
+import com.example.veterinaria.data.VeterinariaContracto.MascotasEntry;
 
 public class EditorActivity extends AppCompatActivity {
 
 
-    private EditText mNameEditText;
-    private EditText mBreedEditText;
-    private EditText mWeightEditText;
-    private Spinner mGenderSpinner;
+    private EditText NombreET;
+    private EditText RazaET;
+    private EditText PesoET;
+    private Spinner SpinnerGenero;
 
     /**
     genero de la mascota, 0 para desconocido, 1 macho, 2 hembra
      */
-    private int mGender = 0;
+    private int Genero = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +38,13 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
 
         //inicializo
-        mNameEditText = findViewById(R.id.editar_nombre_mascota);
-        mBreedEditText = findViewById(R.id.editar_raza_mascota);
-        mWeightEditText = findViewById(R.id.editar_peso_mascota);
-        mGenderSpinner = findViewById(R.id.spinner_genero);
+        NombreET = findViewById(R.id.editar_nombre_mascota);
+        RazaET = findViewById(R.id.editar_raza_mascota);
+        PesoET = findViewById(R.id.editar_peso_mascota);
+        SpinnerGenero = findViewById(R.id.spinner_genero);
 
         setupSpinner();
+
     }
 
     /**
@@ -52,18 +59,18 @@ public class EditorActivity extends AppCompatActivity {
         // Specify dropdown layout style - simple list view with 1 item per line
         genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
-        mGenderSpinner.setAdapter(genderSpinnerAdapter);
-        mGenderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        SpinnerGenero.setAdapter(genderSpinnerAdapter);
+        SpinnerGenero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.genero_macho))) {
-                        mGender = 1; // Macho
+                        Genero = MascotasEntry.GENERO_MACHO; // Macho
                     } else if (selection.equals(getString(R.string.gendero_hembra))) {
-                        mGender = 2; // Hembra
+                        Genero = MascotasEntry.GENERO_HEMBRA; // Hembra
                     } else {
-                        mGender = 0; // Desconocido
+                        Genero = MascotasEntry.GENERO_DESCONOCIDO; // Desconocido
                     }
                 }
             }
@@ -71,10 +78,49 @@ public class EditorActivity extends AppCompatActivity {
             // AdapterView, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mGender = 0; //Desconocido
+                Genero = 0; //Desconocido
             }
         });
     }
+
+
+    private void GuardarMascota(){
+
+        String nombreActual = NombreET.getText().toString().trim();
+        String razaActual = RazaET.getText().toString().trim();
+        String pesoActual = PesoET.getText().toString().trim();
+        int pesoInt = Integer.parseInt(pesoActual);
+
+        MascotasHelper mMascotaHelper = new MascotasHelper(this);
+
+        SQLiteDatabase db = mMascotaHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(MascotasEntry.COLUMNA_MASCOTA_NOMBRE, nombreActual);
+        values.put(MascotasEntry.COLUMNA_MASCOTA_RAZA, razaActual);
+        values.put(MascotasEntry.COLUMNA_MASCOTA_GENERO, Genero);
+        values.put(MascotasEntry.COLUMNA_MASCOTA_PESO, pesoInt);
+
+        long NuevaIDFila = db.insert(MascotasEntry.NOMBRE_TABLA, null,values);
+
+        if (NuevaIDFila == -1){
+            Toast.makeText(this, "Error guardando mascota", Toast.LENGTH_LONG).show();
+
+        }else {
+            Toast.makeText(this, "Se guardo una nueva mascota con el ID : "+ NuevaIDFila , Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+
+
+    }
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,7 +136,9 @@ public class EditorActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                // Do nothing for now
+                GuardarMascota();
+
+                finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
