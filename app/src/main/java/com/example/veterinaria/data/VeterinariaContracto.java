@@ -1,5 +1,6 @@
 package com.example.veterinaria.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class VeterinariaContracto {
@@ -48,12 +49,24 @@ public final class VeterinariaContracto {
          */
         public final static String COLUMNA_MASCOTA_PESO = "peso";
 
-        /**
-         * Possible values for the gender of the pet.
-         */
         public static final int GENERO_DESCONOCIDO = 0;
         public static final int GENERO_MACHO = 1;
         public static final int GENERO_HEMBRA = 2;
+
+
+        //DECLARO URI
+
+        public static final String CONTENT_AUTHORITY = "com.example.veterinaria";
+
+        public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+        public static final String PATH_PETS = "mascotas";
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PETS);
+
+
+
+
     }
 
 
